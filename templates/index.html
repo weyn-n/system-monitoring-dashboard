@@ -73,33 +73,23 @@
       <div class="head"><span>NETWORK</span></div>
       <hr class="rule">
       <div class="row">
-        <span class="k">Interface</span>
-        <span class="v">—</span>
-      </div>
-      <div class="row">
         <span class="k">↑ Upload</span>
-        <span class="v">—</span>
+        <span class="v" id="size_upd"></span>
       </div>
       <div class="row">
         <span class="k">↓ Download</span>
-        <span class="v">—</span>
+        <span class="v" id="size_dowd"></span>
       </div>
     </section>
     
     <section>
       <div class="head">
-        <span>CPU — LAST 60s</span>
+          <span>CPU — LAST 60s</span>
       </div>
+
       <hr class="rule">
-      <pre class="chart"></pre>
-    </section>
-    
-    <section>
-      <div class="head">
-        <span>PROCESSES</span>
-      </div>
-      <hr class="rule">
-      <div></div>
+
+      <canvas id="cpu-chart"></canvas>
     </section>
     
     <div class="foot">live · updates every 2s <span class="blink">●</span></div>

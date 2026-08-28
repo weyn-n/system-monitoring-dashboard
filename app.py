@@ -5,6 +5,9 @@ import time
 
 app = Flask(__name__)
 
+last_net = psutil.net_io_counters()
+last_time = time.time()
+
 def get_stats():
 
     # SYSTEM
@@ -47,7 +50,7 @@ def get_stats():
 
     # RESOURCES
 
-    cpu = psutil.cpu_percent()
+    cpu = psutil.cpu_percent(interval=0.1)
     ram = psutil.virtual_memory().percent
 
     # Disk
@@ -59,25 +62,33 @@ def get_stats():
     disk_total = f"{disk.total // 1024 ** 3} GB"
 
     # NETWORK
-    network = psutil.net_io_counters()
 
-    units = ['B/s', 'KB/s', 'MB/s', 'GB/s', 'TB/s']
-    i_upd = 0
-    i_dowd = 0
+    global last_net, last_time
 
-    upd = network.bytes_sent
-    dowd = network.bytes_recv
+    current_net = psutil.net_io_counters()
+    current_time = time.time()
 
-    while upd >= 1024 and i_upd < len(units) - 1:
-        upd /= 1024
-        i_upd += 1
+    elapsed = current_time - last_time
 
-    while dowd >= 1024 and i_dowd < len(units) - 1:
-        dowd /= 1024
-        i_dowd += 1
+    upload_speed = (current_net.bytes_sent - last_net.bytes_sent) / elapsed
+    download_speed = (current_net.bytes_recv - last_net.bytes_recv) / elapsed
 
-    size_upd = f"{upd:.2f} {units[i_upd]}"
-    size_dowd = f"{dowd:.2f} {units[i_dowd]}"
+    last_net = current_net
+    last_time = current_time
+
+    def format_bytes(value):
+        if value < 1024:
+            return f"{value:.0f} B"
+
+        if value < 1024 ** 2:
+            return f"{value / 1024:.1f} KB"
+
+        if value < 1024 ** 3:
+            return f"{value / (1024 ** 2):.1f} MB"
+
+        return f"{value / (1024 ** 3):.1f} GB"
+
+
 
     print("Hostname:", hostname)
     print("OS:", os)
@@ -88,8 +99,6 @@ def get_stats():
     print("Disk:", disk_in_precent, "%")
     print("Disk Used:", disk_used)
     print("Disk Total:", disk_total)
-    print("Uploaded:", size_upd)
-    print("Downloaded:", size_dowd)
     print("Uptime:", uptime_result)
 
     data = {
@@ -102,8 +111,8 @@ def get_stats():
         "disk_in_precent": disk_in_precent,
         "disk_used": disk_used,
         "disk_total": disk_total,
-        "size_upd": size_upd,
-        "size_dowd": size_dowd,
+        'size_upd': format_bytes(upload_speed) + '/s',
+        'size_dowd': format_bytes(download_speed) + '/s',
         "uptime_result": uptime_result,
     }
 
