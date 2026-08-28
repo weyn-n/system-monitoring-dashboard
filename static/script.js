@@ -5,8 +5,7 @@ function updateStats() {
             document.getElementById('cpu').textContent = data.cpu;
             document.getElementById('ram').textContent = data.ram;
             document.getElementById('disk_in_precent').textContent = data.disk_in_precent;
-            document.getElementById('disk_used').textContent = data.disk_used;
-            document.getElementById('disk_total').textContent = data.disk_total;
+            document.getElementById('disk').textContent = `${data.disk_used} / ${data.disk_total}`;
             document.getElementById('size_upd').textContent = data.size_upd;
             document.getElementById('size_dowd').textContent = data.size_dowd;
             document.getElementById('uptime_result').textContent = data.uptime_result;

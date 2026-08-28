@@ -5,7 +5,6 @@ import time
 
 app = Flask(__name__)
 
-@app.route('/')
 def get_stats():
 
     # SYSTEM
@@ -112,11 +111,11 @@ def get_stats():
 
 @app.route('/')
 def index():
-    return render_template('index.html', **get_stats())
+    return render_template('index.html', **get_stats())   # ← HTML
 
 @app.route('/api/stats')
 def api_stats():
-    return jsonify(get_stats())
+    return jsonify(get_stats())   # ← JSON
 
 if __name__ == '__main__':
     app.run(debug=True)
