@@ -12,52 +12,99 @@
     <section>
       <div class="head"><span>SYSTEM</span></div>
       <hr class="rule">
-      <div class="row"><span class="k">Hostname</span><span class="v" id="hostname">—</span></div>
-      <div class="row"><span class="k">OS</span><span class="v" id="os">—</span></div>
-      <div class="row"><span class="k">CPU Cores</span><span class="v" id="cores">—</span></div>
-      <div class="row"><span class="k">Processes</span><span class="v" id="procCount">—</span></div>
-      <div class="row"><span class="k">Uptime</span><span class="v" id="uptime">—</span></div>
+      <div class="row">
+        <span class="k">Hostname</span>
+        <span class="v">{{ hostname }}</span>
+      </div>
+      <div class="row">
+        <span class="k">OS</span>
+        <span class="v">{{ os }}</span>
+      </div>
+      <div class="row">
+        <span class="k">CPU Cores</span>
+        <span class="v" id="cpu_cores">{{ cpu_cores }}</span></div>
+      <div class="row">
+        <span class="k">Processes</span>
+        <span class="v" id="processes">{{ processes }}</span>
+      </div>
+      <div class="row">
+        <span class="k">Uptime</span>
+        <span class="v" id="uptime_reesult">{{ uptime_result }}</span>
+      </div>
     </section>
     
     <section>
       <div class="head"><span>RESOURCES</span></div>
       <hr class="rule">
       <div class="bar-row">
-        <div class="bar-top"><span class="k">CPU</span><span class="v" id="cpuVal">—</span></div>
-        <div class="bar-track"><div class="bar-fill" id="cpuBar"></div></div>
+        <div class="bar-top">
+          <span class="k">CPU</span>
+          <span class="v" id="cpu">{{ cpu }}%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill"></div>
+        </div>
       </div>
       <div class="bar-row">
-        <div class="bar-top"><span class="k">RAM</span><span class="v" id="ramVal">—</span></div>
-        <div class="bar-track"><div class="bar-fill" id="ramBar"></div></div>
+        <div class="bar-top">
+          <span class="k">RAM</span>
+          <span class="v" id="ram">{{ ram }}%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill"></div>
+        </div>
       </div>
       <div class="bar-row">
-        <div class="bar-top"><span class="k">Disk</span><span class="v" id="diskVal">—</span></div>
-        <div class="bar-track"><div class="bar-fill" id="diskBar"></div></div>
+        <div class="bar-top">
+          <span class="k">Disk</span>
+          <span class="v" id="disk_in_precent">{{ disk_in_precent }}%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill"></div>
+        </div>
       </div>
-      <div class="row" style="margin-top:8px;"><span class="k">Free space</span><span class="v" id="freeSpace">—</span></div>
+      <div class="row" style="margin-top:8px;">
+        <span class="k">Free space</span>
+        <span id="disk_used" class="v">{{ disk_used }}</span> / <span id="disk_total" class="v">{{ disk_total }}</span>
+      </div>
     </section>
     
     <section>
       <div class="head"><span>NETWORK</span></div>
       <hr class="rule">
-      <div class="row"><span class="k">Interface</span><span class="v" id="iface">—</span></div>
-      <div class="row"><span class="k">↑ Upload</span><span class="v" id="upload">—</span></div>
-      <div class="row"><span class="k">↓ Download</span><span class="v" id="download">—</span></div>
+      <div class="row">
+        <span class="k">Interface</span>
+        <span class="v">—</span>
+      </div>
+      <div class="row">
+        <span class="k">↑ Upload</span>
+        <span class="v">—</span>
+      </div>
+      <div class="row">
+        <span class="k">↓ Download</span>
+        <span class="v">—</span>
+      </div>
     </section>
     
     <section>
-      <div class="head"><span>CPU — LAST 60s</span></div>
+      <div class="head">
+        <span>CPU — LAST 60s</span>
+      </div>
       <hr class="rule">
-      <pre class="chart" id="chart"></pre>
+      <pre class="chart"></pre>
     </section>
     
     <section>
-      <div class="head"><span>PROCESSES</span></div>
+      <div class="head">
+        <span>PROCESSES</span>
+      </div>
       <hr class="rule">
-      <div id="procList"></div>
+      <div></div>
     </section>
     
     <div class="foot">live · updates every 2s <span class="blink">●</span></div>
     
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 </html>
