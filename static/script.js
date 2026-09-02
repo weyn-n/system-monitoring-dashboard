@@ -1,4 +1,6 @@
+// Get the latest system stats from the backend
 function updateStats() {
+
     fetch('/api/stats')
         .then(response => response.json())
         .then(data => {
@@ -26,19 +28,49 @@ function updateStats() {
                 processes
             });
 
-            if (cpu) cpu.textContent = data.cpu;
-            if (ram) ram.textContent = data.ram;
-            if (diskPercent) diskPercent.textContent = data.disk_in_precent;
-            if (diskUsed) diskUsed.textContent = data.disk_used;
-            if (diskTotal) diskTotal.textContent = data.disk_total;
+            // Update system stats
+            if (cpu) {
+                cpu.textContent = data.cpu;
+            }
+
+            if (ram) {
+                ram.textContent = data.ram;
+            }
+
+            if (diskPercent) {
+                diskPercent.textContent =
+                    data.disk_in_precent;
+            }
+
+            if (diskUsed) {
+                diskUsed.textContent =
+                    data.disk_used;
+            }
+
+            if (diskTotal) {
+                diskTotal.textContent =
+                    data.disk_total;
+            }
+
             if (upload) {
-                upload.textContent = data.size_upd;
+                upload.textContent =
+                    data.size_upd;
             }
+
             if (download) {
-                download.textContent = data.size_dowd;
+                download.textContent =
+                    data.size_dowd;
             }
-            if (uptime) uptime.textContent = data.uptime_result;
-            if (processes) processes.textContent = data.processes;
+
+            if (uptime) {
+                uptime.textContent =
+                    data.uptime_result;
+            }
+
+            if (processes) {
+                processes.textContent =
+                    data.processes;
+            }
         })
         .catch(err => console.error('Ошибка обновления:', err));
 }
@@ -62,6 +94,7 @@ function resizeCanvas() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
+// Draw the CPU usage graph
 function drawCPUChart() {
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
@@ -115,6 +148,7 @@ function drawCPUChart() {
     ctx.stroke();
 }
 
+// Add a new CPU value to the graph
 function addCPUValue(value) {
 
     value = Number(value);
@@ -123,12 +157,10 @@ function addCPUValue(value) {
         return;
     }
 
-    // Ограничиваем 0-100%
     value = Math.max(0, Math.min(100, value));
 
     cpuHistory.push(value);
 
-    // Оставляем только последние 30 измерений
     if (cpuHistory.length > CPU_HISTORY_LENGTH) {
         cpuHistory.shift();
     }
@@ -240,12 +272,14 @@ function updateStats() {
 resizeCanvas();
 drawCPUChart();
 
+// Redraw the graph when the window size changes
 window.addEventListener('resize', () => {
     resizeCanvas();
     drawCPUChart();
 });
 
+// Get the first set of stats
 updateStats();
 
-// Каждые 2 секунды
+// Refresh the stats every 2 seconds
 setInterval(updateStats, 2000);

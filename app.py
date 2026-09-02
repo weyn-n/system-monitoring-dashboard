@@ -4,6 +4,7 @@ import psutil
 import platform
 import time
 
+# Initialize the Flask application
 app = Flask(__name__)
 
 last_net = psutil.net_io_counters()
@@ -102,6 +103,7 @@ def get_stats():
     print("Disk Total:", disk_total)
     print("Uptime:", uptime_result)
 
+    # Prepare system statistics for the frontend
     data = {
         "hostname": hostname,
         "os": os,
