@@ -189,3 +189,10 @@ system-monitoring-dashboard/
 | Network | Network information  |
 | Uptime  | System uptime        |
 
+## 🌐 Live Demo
+
+The application is deployed on **Render** and can be accessed online:
+
+**https://system-monitoring-dashboard-4y9b.onrender.com/**
+
+> **Note:** The monitoring data shown on the website belongs to the **Render server** running the application, not to the device of the person visiting the website.
